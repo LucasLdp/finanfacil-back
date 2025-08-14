@@ -1,5 +1,7 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 
+import "dotenv/config";
+
 const JWT_SECRET = process.env.JWT_SECRET || "secret-key";
 
 export interface JwtPayload {
