@@ -1,7 +1,5 @@
-import { PrismaClient } from "../generated/prisma";
 import { HttpError } from "../error/http-error";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export interface CreateTransactionInput {
   userId: string;
@@ -163,7 +161,7 @@ export class TransactionService {
   static async update(
     id: string,
     userId: string,
-    data: UpdateTransactionInput
+    data: UpdateTransactionInput,
   ) {
     // Verificar se a transação existe e pertence ao usuário
     const existingTransaction = await prisma.transaction.findFirst({
@@ -219,7 +217,7 @@ export class TransactionService {
   static async getSummary(
     userId: string,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
   ): Promise<TransactionSummary> {
     const where: any = {
       userId,
@@ -272,7 +270,7 @@ export class TransactionService {
     const monthlyAverage = await this.calculateMonthlyAverages(
       userId,
       startDate,
-      endDate
+      endDate,
     );
 
     return {
@@ -287,7 +285,7 @@ export class TransactionService {
   private static async calculateMonthlyAverages(
     userId: string,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
   ): Promise<MonthlyAverage[]> {
     // Buscar TODAS as transações do usuário (ou filtradas por data se especificado)
     const whereCondition: any = { userId };
@@ -314,7 +312,7 @@ export class TransactionService {
 
     transactions.forEach((transaction) => {
       const monthKey = `${transaction.createdAt.getFullYear()}-${String(
-        transaction.createdAt.getMonth() + 1
+        transaction.createdAt.getMonth() + 1,
       ).padStart(2, "0")}`;
 
       if (!monthlyData[monthKey]) {
@@ -349,7 +347,7 @@ export class TransactionService {
           averageValue: data.total / data.count,
           totalTransactions: data.count,
         };
-      }
+      },
     );
 
     // Ordenar por data (mais antigo primeiro - ordem crescente)
@@ -387,7 +385,7 @@ export class TransactionService {
     userId: string,
     startDate: Date,
     endDate: Date,
-    type?: "income" | "expense"
+    type?: "income" | "expense",
   ) {
     const where: any = {
       userId,

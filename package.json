@@ -5,9 +5,8 @@
   "scripts": {
     "start": "nodemon --env-file=.env dist/server.js",
     "dev": "tsx watch --env-file=.env src/server.ts",
-    "build": "npm run generate && npx prisma migrate deploy && tsc && npm run copy-prisma",
-    "generate": "prisma generate",
-    "copy-prisma": "mkdir -p dist/generated/prisma && cp -r src/generated/prisma/* dist/generated/prisma/"
+    "build": "npm run generate && npx prisma migrate deploy && tsc",
+    "generate": "prisma generate"
   },
   "keywords": [],
   "author": "",

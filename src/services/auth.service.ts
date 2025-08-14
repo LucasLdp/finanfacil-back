@@ -1,9 +1,8 @@
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "../generated/prisma";
+
 import { JwtService } from "../config/jwt";
 import { HttpError } from "../error/http-error";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export interface LoginInput {
   email: string;
@@ -76,7 +75,7 @@ export class AuthService {
 
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    
+
     const user = await prisma.user.create({
       data: {
         name,
@@ -99,7 +98,7 @@ export class AuthService {
   }
 
   static async getProfile(
-    userId: string
+    userId: string,
   ): Promise<Omit<AuthResponse["user"], "password">> {
     const user = await prisma.user.findUnique({
       where: { id: userId },

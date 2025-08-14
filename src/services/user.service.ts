@@ -1,5 +1,6 @@
+import { PrismaClient } from "@prisma/client";
 import { ConflictError } from "../error/http-error";
-import { PrismaClient } from "../generated/prisma";
+
 import { IUser, ICreateUser, IUpdateUser } from "../interfaces/IUser";
 import bcrypt from "bcryptjs";
 
