@@ -10,7 +10,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(cors());
 
-server.use("/api", routes);
+server.use(routes);
 
 // Middleware de tratamento de erros deve vir por último
 server.use(errorHandler);
